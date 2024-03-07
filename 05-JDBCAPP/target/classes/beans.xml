@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    
+    <bean name="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/sbms_39"/>
+		<property name="username" value="root"/>
+		<property name="password" value="1234"/>		
+	</bean>
+      <bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		  <constructor-arg  name="dataSource" ref="ds"/>		  
+	  </bean>
+	  <bean id="dao" class="in.aryan.dao.BookDaoImpl">
+		  <constructor-arg name="template" ref="jdbcTemplate"/>
+	  </bean>
+		
+	  <bean id="service" class="in.aryan.service.BookServiceImpl">
+		  <property name="bookDao" ref="dao"/>
+	  </bean>
+	  
+      
+</beans>
